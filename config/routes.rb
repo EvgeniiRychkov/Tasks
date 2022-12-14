@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :tasks, except: :show do
     member do
       post :finish
+      post :unfinish
     end
   end
 
