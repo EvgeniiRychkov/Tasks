@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-	before_action :set_task, only: %i[edit update destroy finish]
+	before_action :set_task, only: %i[edit update destroy finish unfinish]
 
 	def index
 		@finished_tasks = current_user.tasks.finished
@@ -34,6 +34,12 @@ class TasksController < ApplicationController
 
 	def finish
 		@task.update(finished: true)
+
+		redirect_to root_path
+	end
+
+	def unfinish
+		@task.update(finished: false)
 
 		redirect_to root_path
 	end
