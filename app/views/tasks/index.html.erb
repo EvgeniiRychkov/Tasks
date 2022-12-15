@@ -3,9 +3,18 @@
 <% @unfinished_tasks.each do |task| %>
 	<div>
 		<%= task.name %>
-		<%= link_to 'Finish', finish_task_path(task), data: { turbo_method: :post } %>
+		<%= link_to 'Start', task_execution_periods_path(task_id: task.id), data: { turbo_method: :post } %>	
+		<%= link_to 'Complete', complete_task_path(task), data: { turbo_method: :post } %>
 		<%= link_to 'Edit', edit_task_path(id: task.id) %>
 		<%= link_to 'Delete', task_path(task), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+
+		<% task.execution_periods.each do |execution_period| %>
+			<%= "#{execution_period.start_time} - #{execution_period.end_time}" %>
+
+			<% if execution_period.end_time.nil? %>
+				<%= link_to 'Finish', task_execution_period_path(id: execution_period.id, task_id: task.id), data: { turbo_method: :patch } %>	
+			<% end %>
+		<% end %>
 	</div>
 <% end %>
 
@@ -14,9 +23,17 @@
 <% @finished_tasks.each do |task| %>
 	<div>
 		<%= task.name %>
-		<%= link_to 'Unfinish', unfinish_task_path(task), data: { turbo_method: :post } %>
+		<%= link_to 'Proceed', proceed_task_path(task), data: { turbo_method: :post } %>
 		<%= link_to 'Edit', edit_task_path(id: task.id) %>
 		<%= link_to 'Delete', task_path(task), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+
+		<% task.execution_periods.each do |execution_period| %>
+			<%= "#{execution_period.start_time} - #{execution_period.end_time}" %>
+
+			<% if execution_period.end_time.nil? %>
+				<%= link_to 'Finish', task_execution_period_path(id: execution_period.id, task_id: task.id), data: { turbo_method: :patch } %>	
+			<% end %>
+		<% end %>
 	</div>
 <% end %>
 

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-	before_action :set_task, only: %i[edit update destroy finish unfinish]
+	before_action :set_task, only: %i[edit update destroy complete proceed]
 
 	def index
-		@finished_tasks = current_user.tasks.finished
-		@unfinished_tasks = current_user.tasks.unfinished
+		@finished_tasks = current_user.tasks.finished.includes(:execution_periods)
+		@unfinished_tasks = current_user.tasks.unfinished.includes(:execution_periods)
 	end
 
 	def new
@@ -32,13 +32,13 @@ class TasksController < ApplicationController
 		redirect_to root_path
 	end
 
-	def finish
+	def complete
 		@task.update(finished: true)
 
 		redirect_to root_path
 	end
 
-	def unfinish
+	def proceed
 		@task.update(finished: false)
 
 		redirect_to root_path
