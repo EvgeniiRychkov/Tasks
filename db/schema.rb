@@ -10,16 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_14_204656) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_17_062356) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "execution_periods", force: :cascade do |t|
-    t.datetime "start_time", default: "2022-12-15 04:55:47"
+    t.datetime "start_time"
     t.datetime "end_time"
     t.integer "task_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "duration"
   end
 
   create_table "tasks", force: :cascade do |t|

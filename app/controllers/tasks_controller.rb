@@ -6,6 +6,7 @@ class TasksController < ApplicationController
 	def index
 		@finished_tasks = current_user.tasks.finished.includes(:execution_periods)
 		@unfinished_tasks = current_user.tasks.unfinished.includes(:execution_periods)
+		@durations = current_user.tasks.includes(:execution_periods).group('tasks.id').sum(:duration)
 	end
 
 	def new
