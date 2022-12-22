@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :tasks, except: :show do
-    resources :execution_periods, only: %i[create update]
+  resources :categories, except: :show do
+    resources :tasks, except: :show do
+      resources :execution_periods, only: %i[create update]
 
-    member do
-      post :complete
-      post :proceed
+      member do
+        post :complete
+        post :proceed
+      end
     end
   end
 
-  root 'tasks#index'
+  root 'categories#index'
 end
